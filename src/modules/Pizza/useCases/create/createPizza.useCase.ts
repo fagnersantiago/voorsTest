@@ -23,9 +23,7 @@ class CreatePizzaUseCase {
       if (!isValidFlavor) {
         throw Error('flavor is required!');
       }
-
-      const prepartionTime = await this.pizzaRepository.calculatePreparationTime(data)
-
+      
       const pizza = await this.pizzaRepository.create({
         size: validSizeOfPizza,
         flavor: isValidFlavor,
