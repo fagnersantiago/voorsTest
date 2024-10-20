@@ -1,14 +1,22 @@
 {
   "dependencies": {
+    "@prisma/client": "^5.21.1",
     "@types/node": "^22.7.7",
+    "@types/uuid": "^10.0.0",
     "express": "^4.21.1",
+    "express-async-errors": "^3.1.1",
     "nodemon": "^3.1.7",
+    "pg": "^8.13.0",
+    "prisma": "^5.21.1",
+    "reflect-metadata": "^0.2.2",
     "ts-node": "^10.9.2",
     "tsyringe": "^4.8.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "uuid": "^10.0.0"
   },
   "scripts": {
-    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/index.ts"
+    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
