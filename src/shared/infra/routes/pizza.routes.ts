@@ -7,6 +7,7 @@ const pizzaRouter = Router();
 
 const createPizzaController = new CreatePizzaController();
 const listOrderController = new ListOrderController();
+
 /**
  * @swagger
  * /pizza/create:
@@ -22,12 +23,10 @@ const listOrderController = new ListOrderController();
  *             properties:
  *               size:
  *                 type: string
- *                 example: large
+ *                 example: "large"
  *               flavor:
- *                 type: array
- *                 items:
- *                   type: string
- *                 example: [ "calabresa" ]
+ *                 type: string
+ *                 example: "calabresa"
  *               customizations:
  *                 type: array
  *                 items:
@@ -36,8 +35,41 @@ const listOrderController = new ListOrderController();
  *     responses:
  *       201:
  *         description: Pizza criada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: "pizzaId"
+ *                 size:
+ *                   type: string
+ *                   example: "large"
+ *                 flavor:
+ *                   type: string
+ *                   example: "calabresa"
+ *                 customizations:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: [ "extra bacon" ]
+ *                 preparationTime:
+ *                   type: integer
+ *                   example: 20
+ *                 value:
+ *                   type: number
+ *                   example: 30.00
  *       400:
- *         description: Erro na criação da pizza
+ *         description: Erro to create pizza
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "invalid Size!"
  */
 pizzaRouter.post('/create', createPizzaController.handle.bind(createPizzaController));
 
@@ -50,18 +82,66 @@ pizzaRouter.post('/create', createPizzaController.handle.bind(createPizzaControl
  *     parameters:
  *       - in: path
  *         name: id
- *         schema:
- *           type: string
  *         required: true
  *         description: ID do pedido
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: Pedido retornado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: "90ebb280-3c25-47bb-b3e2-fca5c905ae75"
+ *                 totalValue:
+ *                   type: number
+ *                   example: 88
+ *                 totalTime:
+ *                   type: integer
+ *                   example: 60
+ *                 pizzas:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         example: "0adcd25b-9fa6-4119-842e-30e06c3d51ac"
+ *                       size:
+ *                         type: string
+ *                         example: "large"
+ *                       flavor:
+ *                         type: string
+ *                         example: "portuguesa"
+ *                       customizations:
+ *                         type: array
+ *                         items:
+ *                           type: string
+ *                         example: [ "extra bacon", "borda recheada" ]
+ *                       preparationTime:
+ *                         type: integer
+ *                         example: 30
+ *                       value:
+ *                         type: number
+ *                         example: 48
+ *                       orderId:
+ *                         type: string
+ *                         example: "90ebb280-3c25-47bb-b3e2-fca5c905ae75"
  *       404:
  *         description: Pedido não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Order not exists"
  */
 pizzaRouter.get('/:id', listOrderController.handle.bind(listOrderController));
-
-
 
 export { pizzaRouter };
