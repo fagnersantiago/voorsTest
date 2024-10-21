@@ -1,15 +1,19 @@
-FROM node:18
+# Use uma imagem base leve
+FROM node:18-alpine
 
-WORKDIR /usr/app
 
-COPY package.json ./
+WORKDIR /app
 
-RUN yarn install 
+
+COPY package.json yarn.lock ./
+
+
+RUN yarn cache clean && yarn install
+
 
 COPY . .
 
-RUN yarn build
 
 EXPOSE 3333
 
-CMD ["yarn", "run", "dev"]
+CMD ["yarn", "start"]
