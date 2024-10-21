@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { IPizza } from '../../repository/IPizza';
 import { createPizzaDto } from '../../dto/createPizzaDTO';
 
+
 @injectable()
 class CreatePizzaUseCase {
   constructor(
@@ -27,7 +28,7 @@ class CreatePizzaUseCase {
         return {
           size: validSize,
           flavor: Array.isArray(validFlavor) ? validFlavor : [validFlavor],
-          customizations: pizzaData.customizations || [],
+          customizations: pizzaData.customizations || [], 
         };
       }));
 
