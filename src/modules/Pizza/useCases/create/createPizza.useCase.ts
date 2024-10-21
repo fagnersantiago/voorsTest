@@ -21,12 +21,12 @@ class CreatePizzaUseCase {
 
         const validFlavor = await this.pizzaRepository.chooseFlavorPizza(pizzaData.flavor);
         if (!validFlavor) {
-          throw new Error(`Invalid flavor for pizza: ${pizzaData.flavor}`);
+          throw new Error(`Invalid flavor for pizza: ${pizzaData.flavor.join(', ')}`);
         }
 
         return {
           size: validSize,
-          flavor: validFlavor[0],
+          flavor: Array.isArray(validFlavor) ? validFlavor : [validFlavor],
           customizations: pizzaData.customizations || [],
         };
       }));

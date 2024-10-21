@@ -11,8 +11,8 @@ const validFlavors = ['calabresa', 'marguerita', 'portuguesa'];
 class PizzaRepository implements IPizza {
 
   private orderRepository: OrderRepository;
-  constructor() {
-    this.orderRepository = new OrderRepository();
+  constructor(orderRepository: OrderRepository) {
+    this.orderRepository = orderRepository; 
   }
   async create(data: createPizzaDto): Promise<Pizza[]> {
 
@@ -20,6 +20,7 @@ class PizzaRepository implements IPizza {
     let totalValue = 0;
 
     const pizzasPromises = data.pizzas.map(async pizzaData => {
+
       const preparationTime = await this.calculatePreparationTime(pizzaData);
       const value = await this.calculateValue(
         pizzaData.size,
@@ -29,36 +30,39 @@ class PizzaRepository implements IPizza {
       totalTime += preparationTime;
       totalValue += value;
 
+      const flavor = pizzaData.flavor instanceof Array ? pizzaData.flavor[0] : pizzaData.flavor;
+
       const createdPizza = await prisma.pizza.create({
         data: {
           size: pizzaData.size,
-          flavor: pizzaData.flavor[0],
+          flavor: flavor,
           customizations: pizzaData.customizations,
           preparationTime: preparationTime,
           value: value
-        } 
+        }
       });
 
       return {
         size: createdPizza.size,
-        flavor: createdPizza.flavor[0],
+        flavor: createdPizza.flavor,
         customizations: createdPizza.customizations,
         value: createdPizza.value,
         preparationTime: createdPizza.preparationTime,
-        
+
       };
+
     });
 
     const pizzas = await Promise.all(pizzasPromises);
 
-    let order = await this.orderRepository.createOrder(totalValue, totalTime, pizzas);
+    await this.orderRepository.createOrder(totalValue, totalTime, pizzas);
 
-  
+    const pizzasCreted = pizzas.map((pizza) => ({
+      ...pizza,
+    }));
 
-  return pizzas.map((pizza) => ({
-    ...pizza,
-    orderId: order.id
-  }));
+    return pizzasCreted as Pizza[]
+
   }
 
   async chooseSizePizza(size: string): Promise<string> {

@@ -13,13 +13,13 @@ class ListOrderUseCase {
 
   async execute(data: createOrderDTO) {
    try {
-    const order = this.orderRepository.findById(data.id);
+    const order = await this.orderRepository.findById(data.id);
 
     if(!order) {
       throw new Error("Order not exists")
     }
 
-  const listOrder = await this.orderRepository.listOrder([(await order).id])
+  const listOrder = await this.orderRepository.listOrder([order.id])
     
   return listOrder
 
