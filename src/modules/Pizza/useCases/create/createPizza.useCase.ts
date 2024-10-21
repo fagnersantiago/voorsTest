@@ -12,31 +12,31 @@ class CreatePizzaUseCase {
 
   async execute(data: createPizzaDto) {
     try {
-      const validSizeOfPizza = await this.pizzaRepository.chooseSizePizza(data.size);
+    
+      const validatedPizzas = await Promise.all(data.pizzas.map(async (pizzaData) => {
+        const validSize = await this.pizzaRepository.chooseSizePizza(pizzaData.size);
+        if (!validSize) {
+          throw new Error(`Invalid size for pizza: ${pizzaData.size}`);
+        }
 
-      if (!validSizeOfPizza) {
-        throw Error('invalid Size!');
-      }
+        const validFlavor = await this.pizzaRepository.chooseFlavorPizza(pizzaData.flavor);
+        if (!validFlavor) {
+          throw new Error(`Invalid flavor for pizza: ${pizzaData.flavor}`);
+        }
 
-      const isValidFlavor = await this.pizzaRepository.chooseFlavorPizza(data.flavor);
+        return {
+          size: validSize,
+          flavor: validFlavor[0],
+          customizations: pizzaData.customizations || [],
+        };
+      }));
 
-      if (!isValidFlavor) {
-        throw Error('flavor is required!');
-      }
-      
-      const pizza = await this.pizzaRepository.create({
-        size: validSizeOfPizza,
-        flavor: isValidFlavor,
-        customizations: data.customizations,
-        preparationTime: null,
-        value: data.value,
-        orderId: null,
-      });
-
-      return pizza;
+      const pizzas = await this.pizzaRepository.create({ pizzas: validatedPizzas });
+      return pizzas; 
     } catch (error) {
       throw error;
     }
   }
 }
+
 export { CreatePizzaUseCase };

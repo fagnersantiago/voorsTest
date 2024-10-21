@@ -1,6 +1,6 @@
 interface PizzaOrderDTO {
     size: string;                   
-    flavor: string[];                    
+    flavor: string;                    
 }
 
 export {PizzaOrderDTO}

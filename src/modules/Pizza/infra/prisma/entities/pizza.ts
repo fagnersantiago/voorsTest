@@ -15,14 +15,14 @@ class Pizza {
     customizations: string[],
     value: number,
     preparationTime: number,
-    orderId: string,
+    orderId?: string,
   ) {
     this.size = size;
     this.flavor = flavor;
     this.customizations = customizations;
     this.value = value;
     this.preparationTime = preparationTime;
-    this.orderId = orderId;
+    this.orderId = orderId ?? uuid();
 
     if (!this.id) {
       this.id = uuid();

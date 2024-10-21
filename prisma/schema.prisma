@@ -7,21 +7,20 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Pizza {
-  id              String   @id @default(uuid())
-  size            String
-  flavor          String
-  customizations  String[] @default([])
-  value           Float
-  preparationTime Int
-  orderId         String?
-  order           Order?    @relation(fields: [orderId], references: [id])
-}
-
 model Order {
   id         String   @id @default(uuid())
   totalValue Float
   totalTime  Int
-  pizzas     Pizza[]
-  createdAt  DateTime @default(now())
+  pizzas     Pizza[]  @relation("OrderPizzas")
+}
+
+model Pizza {
+  id                 String @id @default(uuid())
+  size               String
+  flavor             String
+  customizations     String[]
+  preparationTime    Int
+  value              Float
+  order              Order? @relation("OrderPizzas", fields: [orderId], references: [id])
+  orderId           String?
 }
