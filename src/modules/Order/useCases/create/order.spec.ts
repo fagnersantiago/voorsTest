@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { ListOrderUseCase } from './order.useCase';
-import { createOrderDTO } from '../../dto/createOrderDTO'; 
+import { listOrderDTO } from '../../dto/createOrderDTO'; 
 import { InMemoryOrderRepository } from '../../repository/inMemory/orderRepository';
 
 describe('ListOrderUseCase', () => {
@@ -22,7 +22,7 @@ describe('ListOrderUseCase', () => {
 
     await orderRepository.createOrder(orderData.totalValue, orderData.totalTime, orderData.pizzas);
 
-    const createOrderDto: createOrderDTO = { id: '1' }; 
+    const createOrderDto: listOrderDTO = { id: '1' }; 
 
     const result = await listOrderUseCase.execute(createOrderDto);
 
@@ -30,7 +30,7 @@ describe('ListOrderUseCase', () => {
   });
 
   it('should throw an error when the order does not exist', async () => {
-    const createOrderDto: createOrderDTO = { id: '999' }; 
+    const createOrderDto: listOrderDTO = { id: '999' }; 
   
     await expect(listOrderUseCase.execute(createOrderDto)).rejects.toThrow('Order not exists');
   });

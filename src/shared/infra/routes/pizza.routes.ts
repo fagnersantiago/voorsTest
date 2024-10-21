@@ -94,43 +94,45 @@ pizzaRouter.post('/create', createPizzaController.handle.bind(createPizzaControl
  *             schema:
  *               type: object
  *               properties:
- *                 id:
- *                   type: string
- *                   example: "90ebb280-3c25-47bb-b3e2-fca5c905ae75"
- *                 totalValue:
- *                   type: number
- *                   example: 88
- *                 totalTime:
- *                   type: integer
- *                   example: 60
- *                 pizzas:
+ *                 listedOrder:
  *                   type: array
  *                   items:
  *                     type: object
  *                     properties:
  *                       id:
  *                         type: string
- *                         example: "0adcd25b-9fa6-4119-842e-30e06c3d51ac"
- *                       size:
- *                         type: string
- *                         example: "large"
- *                       flavor:
- *                         type: string
- *                         example: "portuguesa"
- *                       customizations:
+ *                         example: "90ebb280-3c25-47bb-b3e2-fca5c905ae75"
+ *                       totalValue:
+ *                         type: number
+ *                         example: 88
+ *                       totalTime:
+ *                         type: integer
+ *                         example: 60
+ *                       pizzas:
  *                         type: array
  *                         items:
- *                           type: string
- *                         example: [ "extra bacon", "borda recheada" ]
- *                       preparationTime:
- *                         type: integer
- *                         example: 30
- *                       value:
- *                         type: number
- *                         example: 48
- *                       orderId:
- *                         type: string
- *                         example: "90ebb280-3c25-47bb-b3e2-fca5c905ae75"
+ *                           type: object
+ *                           properties:
+ *                             id:
+ *                               type: string
+ *                               example: "0adcd25b-9fa6-4119-842e-30e06c3d51ac"
+ *                             size:
+ *                               type: string
+ *                               example: "large"
+ *                             flavor:
+ *                               type: string
+ *                               example: "portuguesa"
+ *                             customizations:
+ *                               type: array
+ *                               items:
+ *                                 type: string
+ *                               example: [ "extra bacon", "borda recheada" ]
+ *                             preparationTime:
+ *                               type: integer
+ *                               example: 30
+ *                             value:
+ *                               type: number
+ *                               example: 48
  *       404:
  *         description: Pedido não encontrado
  *         content:
@@ -142,6 +144,7 @@ pizzaRouter.post('/create', createPizzaController.handle.bind(createPizzaControl
  *                   type: string
  *                   example: "Order not exists"
  */
+
 pizzaRouter.get('/:id', listOrderController.handle.bind(listOrderController));
 
 export { pizzaRouter };

@@ -2,7 +2,7 @@
 
 
 import { OrderRepository } from "../../repository/orderRepository";
-import { createOrderDTO } from "../../dto/createOrderDTO";
+import { listOrderDTO } from "../../dto/createOrderDTO";
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
@@ -11,7 +11,7 @@ class ListOrderUseCase {
     @inject('OrderRepository')
     private orderRepository: OrderRepository) {}
 
-  async execute(data: createOrderDTO) {
+  async execute(data: listOrderDTO) {
    try {
     const order = await this.orderRepository.findById(data.id);
 

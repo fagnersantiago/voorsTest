@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { prisma } from '../infra/prisma';
 import { Order } from '../infra/prisma/entities/order';
 import { IOrder } from './IOrder';
+import { listOrderDTO } from '../dto/createOrderDTO';
 
 class OrderRepository implements IOrder {
   async createOrder(totalValue: number, totalTime: number, pizzas: any[]) {
@@ -52,8 +53,8 @@ class OrderRepository implements IOrder {
         pizzas: true, 
       },
     });
-
-    return orders as unknown as Order;
+    
+    return orders as unknown as Order 
   }
 }
 

@@ -14,8 +14,20 @@ class ListOrderController {
       const listOrderUseCase = container.resolve(ListOrderUseCase);
 
       const listedOrder = await listOrderUseCase.execute({ id });
+      const formattedOrder = listedOrder.map(order => ({
+        id: order.id,
+        totalValue: order.totalValue,
+        totalTime: order.totalTime,
+        pizzas: order.pizzas.map(pizza => ({
+          size: pizza.size,
+          flavor: pizza.flavor,
+          customizations: pizza.customizations,
+          preparationTime: pizza.preparationTime,
+          value: pizza.value,
+        })),
+      }));
 
-      return res.status(201).json({listedOrder});
+      return res.status(200).json({ listedOrder: formattedOrder });
     } catch (err) {
       console.log( err.message)
       next(err)
