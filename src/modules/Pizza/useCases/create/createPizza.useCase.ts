@@ -1,9 +1,6 @@
-import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 import { IPizza } from '../../repository/IPizza';
 import { createPizzaDto } from '../../dto/createPizzaDTO';
-
-
 @injectable()
 class CreatePizzaUseCase {
   constructor(
@@ -17,7 +14,7 @@ class CreatePizzaUseCase {
       const validatedPizzas = await Promise.all(data.pizzas.map(async (pizzaData) => {
         const validSize = await this.pizzaRepository.chooseSizePizza(pizzaData.size);
         if (!validSize) {
-          throw new Error(`Invalid size for pizza: ${pizzaData.size}`);
+          throw new Error (`Invalid size for pizza: ${pizzaData.size}`);
         }
 
         const validFlavor = await this.pizzaRepository.chooseFlavorPizza(pizzaData.flavor);

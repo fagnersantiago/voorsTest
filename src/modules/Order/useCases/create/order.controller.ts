@@ -13,8 +13,11 @@ class ListOrderController {
     try {
       const listOrderUseCase = container.resolve(ListOrderUseCase);
 
-      const listedOrder = await listOrderUseCase.execute({ id });
-      const formattedOrder = listedOrder.map(order => ({
+      const listedOrder  = await listOrderUseCase.execute({ id });
+      
+      const order = listedOrder[0];
+      
+      const formattedOrder = {
         id: order.id,
         totalValue: order.totalValue,
         totalTime: order.totalTime,
@@ -25,7 +28,7 @@ class ListOrderController {
           preparationTime: pizza.preparationTime,
           value: pizza.value,
         })),
-      }));
+      };
 
       return res.status(200).json({ listedOrder: formattedOrder });
     } catch (err) {

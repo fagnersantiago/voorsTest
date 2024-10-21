@@ -11,7 +11,10 @@ describe('ListOrderUseCase', () => {
     orderRepository = new InMemoryOrderRepository();
     listOrderUseCase = new ListOrderUseCase(orderRepository);
   });
-
+  afterEach(() => {
+    jest.clearAllMocks(); 
+  });
+  
   it('should return the order when it exists', async () => {
     const orderData = {
       id: '1', 

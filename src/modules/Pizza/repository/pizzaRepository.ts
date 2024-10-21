@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import { inject, injectable } from 'tsyringe';
 import { prisma } from '../infra/prisma';
 import { createPizzaDto } from '../dto/createPizzaDTO';
 import { PizzaOrderDTO } from '../dto/calculateTimeDTO';
@@ -8,6 +9,8 @@ import { OrderRepository } from '../../Order/repository/orderRepository';
 
 const validSizes = ['small', 'medium', 'large'];
 const validFlavors = ['calabresa', 'marguerita', 'portuguesa'];
+
+@injectable()
 class PizzaRepository implements IPizza {
 
   private orderRepository: OrderRepository;
