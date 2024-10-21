@@ -75,7 +75,7 @@ pizzaRouter.post('/create', createPizzaController.handle.bind(createPizzaControl
 
 /**
  * @swagger
- * /pizza/{id}:
+ * /pizza/list-order/{id}:
  *   get:
  *     summary: Lista o pedido pelo ID
  *     tags: [Order]
@@ -104,10 +104,10 @@ pizzaRouter.post('/create', createPizzaController.handle.bind(createPizzaControl
  *                         example: "90ebb280-3c25-47bb-b3e2-fca5c905ae75"
  *                       totalValue:
  *                         type: number
- *                         example: 88
+ *                         example: 48
  *                       totalTime:
  *                         type: integer
- *                         example: 60
+ *                         example: 30
  *                       pizzas:
  *                         type: array
  *                         items:
@@ -145,6 +145,6 @@ pizzaRouter.post('/create', createPizzaController.handle.bind(createPizzaControl
  *                   example: "Order not exists"
  */
 
-pizzaRouter.get('/:id', listOrderController.handle.bind(listOrderController));
+pizzaRouter.get('/list-order/:id', listOrderController.handle.bind(listOrderController));
 
 export { pizzaRouter };
