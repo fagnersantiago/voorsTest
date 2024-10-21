@@ -39,13 +39,25 @@ Este é um projeto de API REST para gerenciamento de pedidos e pizzas, desenvolv
     "customizations": ["extra bacon"]
   }
 
-#### Listar Pediso
+#### Listar Pedio
 
 - **Método:** `get`
 - **Endpoint:** `/pizzas/:orderId`
-- **Corpo da Requisição:**
+
   ```json
- {
+- **Método:** `GET`
+- **Endpoint:** `/orders/:orderId`
+
+### Parâmetro da Rota
+
+- `orderId` (string): ID do pedido que se deseja consultar.
+
+### Resposta
+
+A resposta será um objeto JSON contendo os detalhes do pedido:
+
+```json
+{
   "id": "90ebb280-3c25-47bb-b3e2-fca5c905ae75",
   "totalValue": 88,
   "totalTime": 60,
@@ -61,16 +73,6 @@ Este é um projeto de API REST para gerenciamento de pedidos e pizzas, desenvolv
       "preparationTime": 30,
       "value": 48,
       "orderId": "90ebb280-3c25-47bb-b3e2-fca5c905ae75"
-    },
-    {
-      "id": "be483692-997a-4a6e-8f61-a3ab666d7896",
-      "size": "large",
-      "flavor": "portuguesa",
-      "customizations": [],
-      "preparationTime": 30,
-      "value": 40,
-      "orderId": "90ebb280-3c25-47bb-b3e2-fca5c905ae75"
     }
   ]
 }
-
